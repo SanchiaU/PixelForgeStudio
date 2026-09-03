@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>resourcesfile/instruction/cursor.png</file>
+        <file>resourcesfile/instruction/cursor_fill.png</file>
+        <file>resourcesfile/instruction/cursor_loupe.png</file>
+        <file>resourcesfile/instruction/cursor_pipette.png</file>
+        <file>resourcesfile/instruction/cursor_spray.png</file>
+        <file>resourcesfile/instruction/curve.png</file>
+        <file>resourcesfile/instruction/ellipse.png</file>
+        <file>resourcesfile/instruction/fill.png</file>
+        <file>resourcesfile/instruction/lastic.png</file>
+        <file>resourcesfile/instruction/line.png</file>
+        <file>resourcesfile/instruction/loupe.png</file>
+        <file>resourcesfile/instruction/pencil.png</file>
+        <file>resourcesfile/instruction/pipette.png</file>
+        <file>resourcesfile/instruction/rectangle.png</file>
+        <file>resourcesfile/instruction/spray.png</file>
+        <file>resourcesfile/instruction/text.png</file>
+    </qresource>
+</RCC>

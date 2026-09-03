@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>resourcesfile/tools/object-rotate-left.png</file>
+        <file>resourcesfile/tools/object-rotate-right.png</file>
+        <file>resourcesfile/tools/zoom-in.png</file>
+        <file>resourcesfile/tools/zoom-out.png</file>
+    </qresource>
+</RCC>

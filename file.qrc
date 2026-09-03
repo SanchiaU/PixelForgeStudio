@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>resourcesfile/file/application-exit.png</file>
+        <file>resourcesfile/file/document-new.png</file>
+        <file>resourcesfile/file/document-open.png</file>
+        <file>resourcesfile/file/document-print.png</file>
+        <file>resourcesfile/file/document-save.png</file>
+        <file>resourcesfile/file/document-save-as.png</file>
+        <file>resourcesfile/file/window-close.png</file>
+    </qresource>
+</RCC>
