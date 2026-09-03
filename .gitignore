@@ -1,0 +1,36 @@
+# 构建目录
+build/
+build-*/
+
+# Qt Creator 文件
+*.user
+*.creator
+*.creator.user
+
+# 编译器输出
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.a
+*.lib
+Makefile
+
+# 调试缓存
+Debug/
+Release/
+
+# 编辑器
+.vscode/
+.vs/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.log
+*.tmp
+*.bak
+*~
