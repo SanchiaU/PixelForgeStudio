@@ -1,0 +1,4 @@
+mainwindow
+easypaintemums
+datasingleton
+resizedialog

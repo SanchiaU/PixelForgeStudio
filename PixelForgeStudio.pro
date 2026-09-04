@@ -11,12 +11,14 @@ CONFIG += c++17
 SOURCES += \
     datasingleton.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    resizedialog.cpp
 
 HEADERS += \
     datasingleton.h \
     easypaintenums.h \
-    mainwindow.h
+    mainwindow.h \
+    resizedialog.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
