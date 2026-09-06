@@ -13,14 +13,18 @@ SOURCES += \
     datasingleton.cpp \
     main.cpp \
     mainwindow.cpp \
-    resizedialog.cpp
+    palettebutton.cpp \
+    resizedialog.cpp \
+    toolbar.cpp
 
 HEADERS += \
     colorchooser.h \
     datasingleton.h \
     easypaintenums.h \
     mainwindow.h \
-    resizedialog.h
+    palettebutton.h \
+    resizedialog.h \
+    toolbar.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

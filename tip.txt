@@ -2,4 +2,5 @@ mainwindow  --主窗口运行
 easypaintemums  --工具的枚举
 datasingleton  --单例类创建（调用）工具
 resizedialog  --调整画板尺寸
-colorchooser --
+colorchooser --颜色选择器
+Toolbar --定义绘图工具类型
