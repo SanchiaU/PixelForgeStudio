@@ -3,4 +3,31 @@ easypaintemums  --工具的枚举
 datasingleton  --单例类创建（调用）工具
 resizedialog  --调整画板尺寸
 colorchooser --颜色选择器
-Toolbar --定义绘图工具类型
+toolbar --定义绘图工具类型(工具栏基类)
+palettebutton --鼠标点击调色板逻辑
+palettebar --创建左下角15种颜色按钮
+shortCutEdit ==快捷键设置修改（1015）
+settingsdialog --完善设置里面的两个选项卡（基本，快捷键）
+additionaltools ==图像、旋转等而外工具（1017）
+imagearea ==图像视图和绘制（1017）-----------------------------------------------
+UndoCommand ==撤销、重做命令（1018）                                                   -
+AbstractInstrument --定义所有绘图工具实现的通用接口和行为                           -
+         <------------------------------------------------------------------------------------
+1、AbstractSelection==鼠标移动事件处理
+2、EraserInstrument==橡皮檫
+3、ColorpickerInstrument--颜色拾取
+4、MagnifierInstrument--放大镜
+5、PencilInstrument--画笔
+6、LineInstrument--划横线
+7、SprayInstrument--喷枪
+8、FillInstrument--填充
+9、RectangleInstrument--矩形
+0、EllipseInstrument--椭圆
+11、CurveLineInstrument--曲线
+12、TextDialog--文本框
+13、TextInstrument文本工具类设置
+14、
+15、
+16、
+17、
+SelectionInstrument ==粘贴复制图像
