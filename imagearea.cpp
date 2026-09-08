@@ -39,7 +39,7 @@
 #include <QMessageBox>          // 消息提示框
 #include <QClipboard>           // 剪贴板操作
 
-//#include "negativeeffect.h"
+#include "negativeeffect.h"
 
 // 构造函数
 // isOpen 是否打开图像文件

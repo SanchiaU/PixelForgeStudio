@@ -12,7 +12,7 @@
 #include "datasingleton.h"    // 单例数据管理器（全局数据共享）
 #include "undocommand.h"            // 自定义撤销命令实现（支持撤销/重做操作）
 
-//#include "grayeffect.h"
+#include "grayeffect.h"
 
 #include <QWidget>             // Qt 窗口部件基类
 #include <QImage>              // Qt 图像处理类

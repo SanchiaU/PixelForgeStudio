@@ -1,5 +1,5 @@
 #include "undocommand.h"
-
+#include "imagearea.h"
 
 
 // 2025/07/28--代码已经审核通过

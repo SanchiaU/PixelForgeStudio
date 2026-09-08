@@ -12,8 +12,8 @@
 #include <QUndoCommand>  // 引入Qt的撤销命令基类
 #include <QImage>        // 引入Qt图像处理类
 
-#include "imagearea.h"
-
+//#include "imagearea.h"
+class ImageArea;
 
 // 提供撤销、重做操作的命令类
 // 此类用于封装图像编辑操作的撤销/重做功能。保存操作前后的图像状态，
