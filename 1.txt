@@ -1,0 +1,65 @@
+🧅 推荐拆解顺序：分 4 层剥
+第 1 层：地基（没有任何依赖的"纯定义"）
+先看这些，因为它们是全项目的地基，别的东西都引用它们：
+
+文件	你要搞懂的事
+easypaintenums.h	只记住两个枚举：InstrumentsEnum（13种工具） 和 EffectsEnum（特效，可忽略）
+datasingleton.h/.cpp	全局单例：颜色、笔刷大小、当前工具、快捷键、画布尺寸。它的 getInstrument()/getPenSize()/getPrimaryColor() 到处被调用
+undocommand.h/.cpp	撤销命令 = 每次操作前整张 QImage 快照，undo/redo 就是换图
+🎯 这层看完，你要能回答：“整个项目里的颜色、笔刷大小、当前工具存在哪？” → DataSingleton。
+
+第 2 层：工具的“抽象基类”（本项目的灵魂）
+文件	你要搞懂的事
+abstractinstrument.h/.cpp	定义工具的统一接口：3 个鼠标事件 + paint()。基类里还实现了 makeUndoCommand()（往撤销栈里压快照）
+abstractselection.h/.cpp	继承自上面，给“选区类工具”加了一套状态机：一大堆 mIsSelectionExists / mIsSelectionMoving / mIsSelectionResizing 标志
+🎯 这层是理解后面所有具体工具类的前提。记住两个词：接口统一（策略模式）+ 状态机。
+
+第 3 层：13 个具体工具（套模板，全看一遍就腻了）
+每个都长一样，挑 2~3 个精读就够了，别 13 个全精读：
+
+精读（有代表性）：
+
+工具	值得学的点
+PencilInstrument	最标准的模板：mousePress 存点 → mouseMove 连续画线 → mouseRelease 收尾，配合 mImageCopy 双缓冲
+FillInstrument	递归填充算法（种子填充/扫描线），有算法含量
+SelectionInstrument	最复杂：复制/剪切/粘贴 + 选区移动 + 调色板截取，依赖第 2 层状态机
+略读（扫一眼即可）： Line、Rectangle、Ellipse、Spray、CurveLine、Eraser、Magnifier、Colorpicker、Text —— 全是「改一下 paint()」的变体。
+
+🎯 这层看完，你要能说出：“新加一种工具要几步？” → 继承 AbstractInstrument + 实现 paint + 在 imagearea 里 new + 在枚举/菜单/工具栏注册 —— 这就是多态的威力。
+
+第 4 层：核心协调者（放最后看，因为依赖上面所有东西）
+文件	你要搞懂的事
+imagearea.h/.cpp	全项目最核心的文件。它把整张图存成 QImage*；鼠标事件来了，查单例里的当前工具 → 分发给对应工具类。还要看它如何持有 QVector<AbstractInstrument*> 和 QUndoStack
+additionaltools	imagearea 的“小弟”，负责缩放/旋转/改画布
+mainwindow.cpp	入口总指挥：建菜单、工具栏、多标签页；把每个 imagearea 的撤销栈加进 QUndoGroup；大量 connect 信号槽
+main.cpp	最先执行，但逻辑最少：建 MainWindow → show → exec
+🎯 最后用 imagearea + mainwindow 把前面所有层串成一条线。
+
+🔄 分析完静态结构后，再走一遍「运行时主线」
+这是让知识变成"活"的关键一步——用一次"画直线"操作串起所有文件：
+
+TEXT
+① 用户在菜单/工具栏点"Line"工具
+    → mainwindow 的槽函数 instumentsAct()
+    → DataSingleton::setInstrument(LINE)   ← 记下当前工具
+② 鼠标在 imagearea 上按下
+    → ImageArea::mousePressEvent()
+    → 从单例查当前工具 = LINE
+    → 从 mInstrumentsHandlers[LINE] 取工具对象
+    → 调用 LineInstrument::mousePressEvent()
+③ LineInstrument 内部
+    → mImageCopy = 当前图像（备份，用于预览）
+    → makeUndoCommand() → new UndoCommand → 压入 QUndoStack
+④ 鼠标拖动
+    → 每帧：imageArea.setImage(mImageCopy) 恢复干净图
+    → paint() 用 QPainter 画临时直线（防重影的双缓冲）
+⑤ 鼠标松开
+    → 最终 paint() 定稿 → setEdited(true)
+⑥ 用户按 Ctrl+Z
+    → UndoCommand::undo() → 把 mPrevImage 换回 imageArea
+这一条线能把 mainwindow、datasingleton、imagearea、abstractinstrument、lineinstrument、undocommand 全部串起来——面试就靠这个讲故事。
+
+📌 终极推荐：3 步拆解法（照着做）
+第 1 遍（半天）： 只看上面第 1 + 2 层 4 个文件，把地基和抽象基类弄懂。
+第 2 遍（一天）： 精读 Pencil、Fill、Selection 三个工具 + imagearea 的鼠标分发逻辑。
+第 3 遍（半天）： 用"画一条线 + 撤销"的主线，把 mainwindow / datasingleton / imagearea / 工具 / undocommand 全部串讲一遍，能不看代码复述 = 真正吃透。
