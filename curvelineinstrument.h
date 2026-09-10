@@ -2,9 +2,6 @@
 #define CURVELINEINSTRUMENT_H
 
 
-// 2025/08/09--代码已经审核通过
-
-
 #include "abstractinstrument.h"
 #include <QtCore/QObject>
 #include <QtCore/QPoint>

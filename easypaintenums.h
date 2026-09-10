@@ -3,7 +3,6 @@
 
 /*
 工具枚举类型：定义绘图软件支持的所有绘图工具
-
 */
 typedef enum{
     NONE_INSTRUMENT = 0,
@@ -22,18 +21,5 @@ typedef enum{
     INSTRUMENTS_COUNT//13、工具总数计数标记
 
 }InstrumentsEnum;  //枚举类型
-
-typedef enum{
-    NONE_EFFECT = 0,
-    NEGATIVE,
-    GRAY,
-    BINARIZATION,
-    GAUSSIANBLUR,
-    GAMMA,
-    SHARPEN,
-    CUSTOM,
-    EFFECTS_COUNT // 特效总数计数标记
-}EffectsEnum;
-
 
 #endif // EASYPAINTENUMS_H

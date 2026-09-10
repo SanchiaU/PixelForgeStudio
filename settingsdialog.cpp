@@ -1,23 +1,15 @@
 #include "settingsdialog.h"
 
 
-// 2025/07/26--代码已经审核通过
-
-
 // 构造函数：初始化对话框
 SettingsDialog::SettingsDialog(QWidget *parent) :
     QDialog(parent)  // 调用基类构造函数
 {
     initializeGui();  // 初始化GUI界面
     layout()->setSizeConstraint(QLayout::SetFixedSize); // 设置固定窗口大小
-    setWindowTitle(tr("Settings")); // 设置窗口标题（支持多语言翻译）
+    setWindowTitle(tr("Settings")); // 设置窗口标题（支持多语言翻译）`
 }
-
-// 析构函数
-SettingsDialog::~SettingsDialog()
-{
-
-}
+SettingsDialog::~SettingsDialog(){}
 
 // 将设置发送到单例对象保存
 void SettingsDialog::sendSettingsToSingleton()
@@ -38,11 +30,9 @@ void SettingsDialog::sendSettingsToSingleton()
 
     // 保存快捷键设置（遍历树形结构）
     QTreeWidgetItem *item;
-    for(int i = 0; i < mShortcutsTree->topLevelItemCount(); i++) // 遍历顶级分组
-    {
+    for(int i = 0; i < mShortcutsTree->topLevelItemCount(); i++){
         item = mShortcutsTree->topLevelItem(i);
-        for(int y = 0; y < item->childCount(); y++) // 遍历分组中的每个命令
-        {
+        for(int y = 0; y < item->childCount(); y++){
             QString group = item->text(0); // 分组名称
             QTreeWidgetItem *child = item->child(y);
             QString command = child->text(0); // 命令名称
@@ -68,17 +58,13 @@ void SettingsDialog::sendSettingsToSingleton()
 // 初始化GUI界面
 void SettingsDialog::initializeGui()
 {
-    // 主布局：垂直布局
     QTabWidget *tabWidget = new QTabWidget(this); // 创建标签页容器
     QVBoxLayout *mainLayout = new QVBoxLayout();
-
-    // 创建确定/取消按钮组
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok |
                                                        QDialogButtonBox::Cancel);
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept())); // 确定按钮连接accept()
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject())); // 取消按钮连接reject()
 
-    // 组装主布局
     mainLayout->addWidget(tabWidget);
     mainLayout->addWidget(buttonBox);
     setLayout(mainLayout);
@@ -92,7 +78,6 @@ void SettingsDialog::initializeGui()
     mLanguageBox->addItem("English");
     mLanguageBox->setCurrentIndex(getLanguageIndex()); // 设置当前选中项
 
-    // 语言设置布局
     QHBoxLayout *hBox1 = new QHBoxLayout();
     hBox1->addWidget(label1);
     hBox1->addWidget(mLanguageBox);

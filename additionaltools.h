@@ -2,11 +2,6 @@
 #define ADDITIONALTOOLS_H
 
 
-
-// 2025/07/28--代码已经审核通过
-
-
-
 #include <QObject>              // 引入Qt核心对象基类
 #include <QImage>               // 引入Qt图像处理类
 #include <QPainter>             // Qt绘图工具
@@ -16,7 +11,6 @@
 #include <QClipboard>           // 剪贴板功能
 #include <QApplication>         // Qt应用核心
 
-// 开始Qt命名空间声明（兼容性处理）
 QT_BEGIN_NAMESPACE
 class ImageArea;  // 前置声明ImageArea类
 class QSize;      // 前置声明Qt尺寸类

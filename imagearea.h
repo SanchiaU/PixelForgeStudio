@@ -83,8 +83,6 @@ public:
     /// 光标管理 ///
     void restoreCursor();   // 恢复工具对应的光标样式
 
-    /// 特效处理 ///
-    void applyEffect(EffectsEnum effect);  // 应用指定特效
 
     /// 缩放控制 ///
     bool zoomImage(qreal factor); // 缩放图像（factor>1放大，<1缩小）

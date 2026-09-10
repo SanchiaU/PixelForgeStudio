@@ -2,20 +2,13 @@
 #define ABSTRACTSELECTION_H
 
 
-
-// 2025/07/31--代码已经审核通过
-
-
-
 #include <QObject>
 
 // 引入抽象工具基类
 #include "abstractinstrument.h"
-
 #include "imagearea.h"          // 图像区域操作类
 #include "undocommand.h"        // 撤销命令支持
-
-#include <QPainter>             // Qt绘图工具
+#include <QPainter>
 
 // 声明Qt命名空间中的类（前向声明）
 QT_BEGIN_NAMESPACE
@@ -23,16 +16,12 @@ class QUndoStack;   // 用于撤销/重做操作的栈
 class ImageArea;    // 图像显示区域类
 QT_END_NAMESPACE
 
-// 抽象选择工具基类
 // 实现选择工具的核心逻辑：包括鼠标事件处理、选择区域管理和操作生命周期
 class AbstractSelection : public AbstractInstrument
 {
     Q_OBJECT
-
 public:
     explicit AbstractSelection(QObject *parent = 0);  // 构造函数
-
-    // 鼠标事件处理函数（覆盖基类方法
     void mousePressEvent(QMouseEvent *event, ImageArea &imageArea);
     void mouseMoveEvent(QMouseEvent *event, ImageArea &imageArea);
     void mouseReleaseEvent(QMouseEvent *event, ImageArea &imageArea);

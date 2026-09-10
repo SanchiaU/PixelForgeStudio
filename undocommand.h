@@ -2,13 +2,7 @@
 #define UNDOCOMMAND_H
 
 
-
-// 2025/07/28--代码已经审核通过
-
-
-
 #include <QObject>
-
 #include <QUndoCommand>  // 引入Qt的撤销命令基类
 #include <QImage>        // 引入Qt图像处理类
 

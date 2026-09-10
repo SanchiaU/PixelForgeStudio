@@ -97,7 +97,6 @@ private:
 
     // 工具和效果映射
     QMap<InstrumentsEnum, QAction*> mInstrumentsActMap;  // 工具->动作映射
-    QMap<EffectsEnum, QAction*> mEffectsActMap;          // 效果->动作映射
 
     // 文件操作动作
     QAction *mSaveAction;      // 保存动作

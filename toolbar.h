@@ -11,8 +11,8 @@
 // 包含Qt工具栏基类
 #include <QToolBar>
 #include <QToolButton>
-#include <QGridLayout>        // 网格布局
-#include <QSpinBox>           // 数字输入框
+#include <QGridLayout>
+#include <QSpinBox>
 #include <QAction>
 #include <QtCore/QMap>
 
@@ -29,18 +29,12 @@ class ToolBar : public QToolBar
 {
     Q_OBJECT            // 启用Qt元对象系统（信号槽机制）
 public:
-    // 构造函数
     explicit ToolBar(const QMap<InstrumentsEnum, QAction*> &actMap, QWidget *parent = 0);
-
-
 private:
     // 初始化所有工具栏控件
     void initializeItems();
-
-    // 创建工具按钮
-    // act 关联的QAction（提供图标、文本等信息）
+    // 创建工具按钮,act 关联的QAction（提供图标、文本等信息）
     QToolButton* createToolButton(QAction *act);
-
     // 工具按钮成员（按功能命名）
     QToolButton *mCursorButton;     // 光标选择工具
     QToolButton *mEraserButton;     // 橡皮擦工具
@@ -54,7 +48,6 @@ private:
     QToolButton *mEllipseButton;    // 椭圆工具
     QToolButton *mCurveButton;      // 曲线工具
     QToolButton *mTextButton;       // 文字工具
-
     // 颜色选择器
     ColorChooser *mPColorChooser;   // 主色选择器
     ColorChooser *mSColorChooser;   // 辅色（次色）选择器

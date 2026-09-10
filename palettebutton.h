@@ -1,19 +1,10 @@
-// 防止头文件重复包含
 #ifndef PALETTEBUTTON_H
 #define PALETTEBUTTON_H
 
-
-// 2025/07/22--代码已经审核通过
-
-
 #include <QObject>
 
-// 包含Qt的工具按钮类
 #include <QToolButton>
-// 包含Qt鼠标事件处理类
 #include <QMouseEvent>
-
-// 包含自定义的单列数据类
 #include "datasingleton.h"
 
 

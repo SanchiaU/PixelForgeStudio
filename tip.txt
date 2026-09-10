@@ -1,4 +1,4 @@
-mainwindow  --主窗口运行
+-mainwindow  --主窗口运行
 easypaintemums  --工具的枚举
 datasingleton  --单例类创建（调用）工具
 resizedialog  --调整画板尺寸
@@ -28,6 +28,3 @@ AbstractInstrument --定义所有绘图工具实现的通用接口和行为     
 13、TextInstrument文本工具类设置
 SelectionInstrument ==粘贴复制图像
 mainwindow 主窗口
-AbstractEffect 灰度
-NegativeEffect
-GrayEffect

@@ -1,15 +1,7 @@
 #include "abstractselection.h"
 
 
-
-// 2025/07/31--代码已经审核通过
-
-
-
-#include "math.h"  // 数学函数
-
-
-
+#include "math.h"
 // 构造函数：初始化所有选择状态标志为false;
 AbstractSelection::AbstractSelection(QObject *parent) :
     AbstractInstrument(parent)
@@ -24,8 +16,6 @@ void AbstractSelection::mousePressEvent(QMouseEvent *event, ImageArea &imageArea
 {
     mButton = event->button();  // 记录按下的鼠标按钮
     mIsMouseMoved = false;      // 重置鼠标移动标志
-
-    // 如果已存在选择区域
     if (mIsSelectionExists)
     {
         // 恢复原始图像状态

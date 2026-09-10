@@ -1,7 +1,5 @@
 #include "selectioninstrument.h"
 
-// 构造函数
-// 构造函数
 SelectionInstrument::SelectionInstrument(QObject *parent) :
     AbstractSelection(parent)  // 调用基类构造函数
 {
@@ -32,7 +30,6 @@ void SelectionInstrument::copyImage(ImageArea &imageArea)
         globalClipboard->setImage(copyImage, QClipboard::Clipboard);  // 设置到剪贴板
     }
 }
-
 // 剪切选区图像到剪贴板
 void SelectionInstrument::cutImage(ImageArea &imageArea)
 {
@@ -142,19 +139,9 @@ void SelectionInstrument::startMoving(ImageArea &imageArea)
 }
 
 // 选区过程（空实现，具体在鼠标移动事件中处理）
-void SelectionInstrument::select(ImageArea &)
-{
-}
-
-// 调整大小过程（空实现）
-void SelectionInstrument::resize(ImageArea &)
-{
-}
-
-// 移动过程（空实现）
-void SelectionInstrument::move(ImageArea &)
-{
-}
+void SelectionInstrument::select(ImageArea &){}
+void SelectionInstrument::resize(ImageArea &){}
+void SelectionInstrument::move(ImageArea &){}
 
 // 完成选区创建
 void SelectionInstrument::completeSelection(ImageArea &imageArea)
