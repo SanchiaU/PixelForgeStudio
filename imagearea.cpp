@@ -39,7 +39,6 @@
 #include <QMessageBox>          // 消息提示框
 #include <QClipboard>           // 剪贴板操作
 
-#include "negativeeffect.h"
 
 // 构造函数
 // isOpen 是否打开图像文件
@@ -142,16 +141,6 @@ ImageArea::ImageArea(const bool &isOpen, const QString &filePath, QWidget *paren
     mInstrumentsHandlers[CURVELINE] = new CurveLineInstrument(this); // 曲线工具
     mInstrumentsHandlers[TEXT] = new TextInstrument(this);     // 文字工具
 
-    // 初始化特效处理数组
-    mEffectsHandlers.fill(nullptr,static_cast<int>(EFFECTS_COUNT));
-
-    // 实例化各种特效并存入处理器数组
-    mEffectsHandlers[NONE_EFFECT] = nullptr;
-    mEffectsHandlers[GRAY] = new GrayEffect(this);
-    mEffectsHandlers[NEGATIVE]=new NegativeEffect(this);
-
-
-
 
 
 }
@@ -159,18 +148,6 @@ ImageArea::ImageArea(const bool &isOpen, const QString &filePath, QWidget *paren
 // 析构函数
 ImageArea::~ImageArea()
 {
-
-
-    // 释放所有特效处理器对象（如果已实现）
-    for (int i = 0; i < mEffectsHandlers.size(); ++i) {
-        if (mEffectsHandlers[i]) {
-            delete mEffectsHandlers[i];
-            mEffectsHandlers[i] = nullptr;
-        }
-    }
-    mEffectsHandlers.clear();
-
-
 
     // 注意：mUndoStack由Qt的父子对象机制自动管理，无需手动释放
 }
@@ -361,56 +338,6 @@ void ImageArea::rotateImage(bool flag)
     emit sendNewImageSize(mImage->size());  // 发出尺寸变化信号
 }
 
-// 应用特效实现
-void ImageArea::applyEffect(EffectsEnum effect)
-{
-    // 1. 验证特效编号
-    if (effect < 0 || effect >= EFFECTS_COUNT) {
-        qDebug() << "Invalid effect enum:" << effect;
-        return;
-    }
-
-    // 2. 检查特效处理器是否存在
-    if (effect == NONE_EFFECT || mEffectsHandlers[effect] == nullptr) {
-        qDebug() << "Effect not implemented or is NONE_EFFECT:" << effect;
-        return;
-    }
-
-    // 3. 检查图像是否有效
-    if (!mImage || mImage->isNull()) {
-        qDebug() << "Image is null, cannot apply effect";
-        return;
-    }
-
-    // 4. 创建撤销命令
-    makeUndoCommand();
-
-    // 5. 获取特效处理器
-    mEffectHandler = mEffectsHandlers[effect];
-
-    // 6. 应用特效到图像
-    bool success = mEffectHandler->apply(*mImage);
-
-    if (success) {
-        // 特效应用成功，标记图像已被编辑
-        setEdited(true);
-
-        // 更新显示
-        update();
-
-        qDebug() << "Effect applied successfully:" << mEffectHandler->getName();
-    } else {
-        qDebug() << "Failed to apply effect:" << mEffectHandler->getName();
-    }
-
-}
-
-// 创建撤销命令（用于特效应用）
-void ImageArea::makeUndoCommand()
-{
-    UndoCommand *cmd = new UndoCommand(mImage, *this);
-    pushUndoCommand(cmd);
-}
 
 
 

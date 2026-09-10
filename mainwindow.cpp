@@ -382,27 +382,6 @@ void MainWindow::initializeMainMenu()
 
     mToolsMenu->addMenu(zoomMenu);
 
-    /********** 特效菜单 **********/
-    QMenu *effectsMenu=menuBar()->addMenu(tr("&Effects"));
-
-    // 灰度特效
-    QAction *grayEffectAction = new QAction(tr("Gray"), this);
-    grayEffectAction->setStatusTip(tr("将图像转换为灰度图像"));
-    connect(grayEffectAction, SIGNAL(triggered()), this, SLOT(applyGrayEffect()));
-    effectsMenu->addAction(grayEffectAction);
-    mEffectsActMap.insert(GRAY, grayEffectAction);
-
-    // 负片特效
-    QAction *negativeEffectAction = new QAction(tr("Negative"), this);
-    negativeEffectAction->setStatusTip(tr("反转图像的所有颜色"));
-    connect(negativeEffectAction, SIGNAL(triggered()), this, SLOT(applyNegativeEffect()));
-    effectsMenu->addAction(negativeEffectAction);
-    mEffectsActMap.insert(NEGATIVE, negativeEffectAction);
-
-
-
-
-
     /********** 帮助菜单 **********/
     QMenu *aboutMenu = menuBar()->addMenu(tr("&About"));
 
@@ -981,24 +960,5 @@ void MainWindow::helpAct()
                        QString("<b>Software</b> %1: %2 <br> %3: "
                                "<li>LingSheng Education</li>"
                                ).arg(tr("Version")).arg("2.2.2").arg(tr("Authors")));
-
 }
 
-
-// 特效操作实现
-// 应用灰度特效
-void MainWindow::applyGrayEffect()
-{
-    if(ImageArea *imageArea=getCurrentImageArea()){
-        imageArea->applyEffect(GRAY);
-    }
-}
-
-// 应用负片特效
-void MainWindow::applyNegativeEffect()
-{
-    if(ImageArea *imageArea=getCurrentImageArea()){
-        imageArea->applyEffect(NEGATIVE);
-    }
-
-}

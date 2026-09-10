@@ -12,7 +12,6 @@
 #include "datasingleton.h"    // 单例数据管理器（全局数据共享）
 #include "undocommand.h"            // 自定义撤销命令实现（支持撤销/重做操作）
 
-#include "grayeffect.h"
 
 #include <QWidget>             // Qt 窗口部件基类
 #include <QImage>              // Qt 图像处理类
@@ -158,10 +157,6 @@ private:
     // 工具系统
     QVector<AbstractInstrument*> mInstrumentsHandlers;  // 可用工具集合
     AbstractInstrument *mInstrumentHandler;             // 当前激活工具
-
-    // 特效系统
-    QVector<AbstractEffect*> mEffectsHandlers;  // 可用特效集合
-    AbstractEffect *mEffectHandler;             // 当前激活特效
 
 signals:
     // 颜色信号
