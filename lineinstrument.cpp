@@ -1,11 +1,6 @@
 #include "lineinstrument.h"
 
 
-
-// 2025/08/06--代码已经审核通过
-
-
-
 // 构造函数
 LineInstrument::LineInstrument(QObject *parent) :
     AbstractInstrument(parent)  // 调用基类构造函数

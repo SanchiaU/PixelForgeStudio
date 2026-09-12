@@ -1,8 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-// 2025/08/14--代码已经审核通过
-
 #include <QMainWindow>          // 主窗口基类
 #include <QtCore/QMap>          // Qt映射容器
 #include "easypaintenums.h"     // 自定义枚举类型（工具和效果枚举）
@@ -28,9 +26,6 @@
 #include <QUndoGroup>                 // 撤销/重做组
 #include <QtCore/QTimer>              // 定时器
 
-
-
-// 前置声明Qt类（优化编译速度）
 QT_BEGIN_NAMESPACE
 class QAction;        // 界面操作（菜单项/工具栏按钮）
 class QStatusBar;     // 状态栏组件
@@ -50,7 +45,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT    // Qt元对象系统宏，支持信号槽机制
 
 public:
-    // 构造函数
     // filePaths--启动时要打开的文件路径列表
     // parent--父窗口指针
     MainWindow(QStringList filePaths, QWidget *parent = 0);

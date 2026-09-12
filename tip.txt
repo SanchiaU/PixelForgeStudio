@@ -28,3 +28,11 @@ AbstractInstrument --定义所有绘图工具实现的通用接口和行为     
 13、TextInstrument文本工具类设置
 SelectionInstrument ==粘贴复制图像
 mainwindow 主窗口
+
+
+
+
+1、头文件嵌套重复，保错
+2、独立的功能不知道怎么写接口
+3、写出来存在报错的现象
+单例模式，命令模式，策略模式

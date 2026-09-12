@@ -1,10 +1,5 @@
 #include "curvelineinstrument.h"
 
-
-// 2025/08/09--代码已经审核通过
-
-
-
 // 构造函数
 CurveLineInstrument::CurveLineInstrument(QObject *parent):
     AbstractInstrument(parent)      // 调用基类构造函数
@@ -93,10 +88,8 @@ void CurveLineInstrument::mouseReleaseEvent(QMouseEvent *event, ImageArea &image
 {
     if(imageArea.isPaint())
     {
-        // 恢复初始图像状态
         imageArea.setImage(mImageCopy);
 
-        // 根据按键确定颜色
         if(event->button() == Qt::LeftButton)
             paint(imageArea, false);
         else if(event->button() == Qt::RightButton)
@@ -135,7 +128,3 @@ void CurveLineInstrument::paint(ImageArea &imageArea, bool isSecondaryColor, boo
     painter.end();             // 结束绘制
     imageArea.update();        // 请求界面重绘
 }
-
-
-
-

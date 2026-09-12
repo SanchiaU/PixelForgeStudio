@@ -2,26 +2,16 @@
 #define ERASERINSTRUMENT_H
 
 
-
-// 2025/08/02--代码已经审核通过
-
-
-
-
 #include <QObject>
 
 // 包含Qt核心功能模块
 #include <QtCore/QObject>
-
+#include <QPen>                   // Qt画笔类
+#include <QPainter>               // Qt绘图类
 
 #include "abstractinstrument.h"     // 包含基类头文件
 #include "imagearea.h"              // 图像区域管理类
 #include "datasingleton.h"          // 单例数据管理（存储画笔大小等设置）
-
-
-#include <QPen>                   // Qt画笔类
-#include <QPainter>               // Qt绘图类
-
 
 // 橡皮擦工具类
 // 继承自AbstractInstrument类，实现图像擦除功能

@@ -2,10 +2,6 @@
 #define TEXTDIALOG_H
 
 
-// 2025/08/09--代码已经审核通过
-
-
-
 #include <QDialog>      // Qt对话框模块
 #include <QTextEdit>        // Qt文本编辑框组件
 

@@ -2,7 +2,6 @@
 #define SELECTIONINSTRUMENT_H
 
 #include "abstractselection.h"
-
 #include "imagearea.h"
 #include "undocommand.h"
 #include "math.h"

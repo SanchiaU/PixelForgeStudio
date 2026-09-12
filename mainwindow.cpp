@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 
-// 2025/08/16--代码已经审核通过
 MainWindow::MainWindow(QStringList filePaths, QWidget *parent)
     : QMainWindow(parent), mPrevInstrumentSetted(false) // 初始化父类和标志位
 {
@@ -42,7 +41,6 @@ MainWindow::~MainWindow()
 
 }
 
-// 2025/08/26--代码已经审核通过
 // 初始化标签页组件
 void MainWindow::initializeTabWidget()
 {
@@ -59,8 +57,6 @@ void MainWindow::initializeTabWidget()
     setCentralWidget(mTabWidget);  // 将标签页设置为主窗口的中央控件
 
 }
-
-// 2025/08/26--代码已经审核通过
 void MainWindow::initializeNewTab(const bool &isOpen, const QString &filePath)
 {
     ImageArea *imageArea;  // 图像编辑区域对象指针
@@ -124,7 +120,6 @@ void MainWindow::initializeNewTab(const bool &isOpen, const QString &filePath)
     }
 }
 
-// 2025/08/19--代码已经审核通过
 // 初始化主菜单
 void MainWindow::initializeMainMenu()
 {
@@ -401,9 +396,6 @@ void MainWindow::initializeMainMenu()
     updateShortcuts();
 }
 
-
-
-// 2025/08/19--代码已经审核通过
 // 初始化状态栏
 void MainWindow::initializeStatusBar()
 {
@@ -422,8 +414,6 @@ void MainWindow::initializeStatusBar()
     mStatusBar->addPermanentWidget(mColorPreviewLabel);
     mStatusBar->addPermanentWidget(mColorRGBLabel, -1);
 }
-
-// 2025/08/19--代码已经审核通过
 // 初始化工具栏
 void MainWindow::initializeToolBar()
 {
@@ -435,8 +425,6 @@ void MainWindow::initializeToolBar()
     connect(mToolbar, SIGNAL(sendClearStatusBarColor()), this, SLOT(clearStatusBarColor()));
     connect(mToolbar, SIGNAL(sendClearImageSelection()), this, SLOT(clearImageSelection()));
 }
-
-// 2025/08/19--代码已经审核通过
 // 初始化调色板栏
 void MainWindow::initializePaletteBar()
 {
@@ -470,8 +458,6 @@ ImageArea* MainWindow::getImageAreaByIndex(int index)
     ImageArea *ia = static_cast<ImageArea*>(sa->widget());
     return ia;
 }
-
-// 2025/08/26--代码已经审核通过
 // 激活标签页时的处理
 void MainWindow::activateTab(const int &index)
 {
@@ -501,8 +487,6 @@ void MainWindow::activateTab(const int &index)
     // 每个图像都有自己的撤销历史，需要切换到对应的栈
     mUndoStackGroup->setActiveStack(getCurrentImageArea()->getUndoStack());
 }
-
-// 2025/08/26--代码已经审核通过
 // 更新状态栏的尺寸显示
 void MainWindow::setNewSizeToSizeLabel(const QSize &size)
 {
@@ -510,8 +494,6 @@ void MainWindow::setNewSizeToSizeLabel(const QSize &size)
     mSizeLabel->setText(QString("%1 x %2").arg(size.width()).arg(size.height()));
 
 }
-
-// 2025/08/26--代码已经审核通过
 // 更新状态栏的光标位置
 void MainWindow::setNewPosToPosLabel(const QPoint &pos)
 {
@@ -520,7 +502,6 @@ void MainWindow::setNewPosToPosLabel(const QPoint &pos)
 
 }
 
-// 2025/08/26--代码已经审核通过
 // 更新状态栏的颜色信息
 void MainWindow::setCurrentPipetteColor(const QColor &color)
 {
@@ -542,13 +523,11 @@ void MainWindow::setCurrentPipetteColor(const QColor &color)
 
 }
 
-// 2025/08/26--代码已经审核通过
 // 清除状态栏颜色显示
 void MainWindow::clearStatusBarColor()
 {
     // 清除颜色预览小方块的显示
     mColorPreviewLabel->clear();
-
     // 清除RGB数值文本显示
     mColorRGBLabel->clear();
 
@@ -562,14 +541,12 @@ void MainWindow::newAct()
     // 创建新的空白图像标签页
     initializeNewTab();
 }
-
 // 打开文件
 void MainWindow::openAct()
 {
     // 通过对话框打开文件（true表示打开模式，空路径表示显示对话框）
     initializeNewTab(true);
 }
-
 // 保存文件
 void MainWindow::saveAct()
 {
@@ -585,7 +562,6 @@ void MainWindow::saveAct()
                                    tr("Untitled Image") : getCurrentImageArea()->getFileName());
     }
 }
-
 // 另存为
 void MainWindow::saveAsAct()
 {
@@ -601,7 +577,6 @@ void MainWindow::saveAsAct()
                                    tr("Untitled Image") : getCurrentImageArea()->getFileName());
     }
 }
-
 // 打印
 void MainWindow::printAct()
 {
@@ -611,8 +586,6 @@ void MainWindow::printAct()
         getCurrentImageArea()->print();
     }
 }
-
-// 2025/08/19--代码已经审核通过
 // 打开设置对话框
 void MainWindow::settingsAct()
 {
@@ -623,7 +596,6 @@ void MainWindow::settingsAct()
         updateShortcuts();  // 更新快捷键
     }
 }
-
 // 复制
 void MainWindow::copyAct()
 {
@@ -633,7 +605,6 @@ void MainWindow::copyAct()
         imageArea->copyImage();
     }
 }
-
 // 粘贴
 void MainWindow::pasteAct()
 {
@@ -643,7 +614,6 @@ void MainWindow::pasteAct()
         imageArea->pasteImage();
     }
 }
-
 // 剪切
 void MainWindow::cutAct()
 {
@@ -654,8 +624,6 @@ void MainWindow::cutAct()
     }
 }
 
-
-// 2025/08/19--代码已经审核通过
 // 更新所有快捷键
 void MainWindow::updateShortcuts()
 {
@@ -742,7 +710,6 @@ void MainWindow::closeTabAct()
     closeTab(mTabWidget->currentIndex());
 }
 
-// 2025/08/26--代码已经审核通过
 // 关闭指定标签页
 void MainWindow::closeTab(int index)
 {
@@ -884,7 +851,6 @@ void MainWindow::instumentsAct(bool state)
     }
 }
 
-// 2025/08/26--代码已经审核通过
 // 根据标签页状态启用/禁用菜单
 void MainWindow::enableActions(int index)
 {
@@ -911,7 +877,6 @@ void MainWindow::enableActions(int index)
     }
 }
 
-// 2025/08/26--代码已经审核通过
 // 启用/禁用复制剪切操作
 void MainWindow::enableCopyCutActions(bool enable)
 {
@@ -920,7 +885,6 @@ void MainWindow::enableCopyCutActions(bool enable)
 }
 
 
-// 2025/08/19--代码已经审核通过
 // 清除图像选区
 void MainWindow::clearImageSelection()
 {
@@ -931,7 +895,6 @@ void MainWindow::clearImageSelection()
     }
 }
 
-// 2025/08/26--代码已经审核通过
 // 恢复前一个工具
 void MainWindow::restorePreviousInstrument()
 {
@@ -942,7 +905,6 @@ void MainWindow::restorePreviousInstrument()
     mPrevInstrumentSetted = false;  // 重置标志
 }
 
-// 2025/08/26--代码已经审核通过
 // 设置当前工具
 void MainWindow::setInstrument(InstrumentsEnum instrument)
 {
@@ -951,8 +913,6 @@ void MainWindow::setInstrument(InstrumentsEnum instrument)
     emit sendInstrumentChecked(instrument);
     mPrevInstrumentSetted = false;
 }
-
-// 2025/08/19--代码已经审核通过
 // 显示关于软件信息
 void MainWindow::helpAct()
 {

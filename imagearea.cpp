@@ -147,10 +147,7 @@ ImageArea::ImageArea(const bool &isOpen, const QString &filePath, QWidget *paren
 
 // 析构函数
 ImageArea::~ImageArea()
-{
-
-    // 注意：mUndoStack由Qt的父子对象机制自动管理，无需手动释放
-}
+{}
 
 
 // 初始化图像对象
@@ -320,8 +317,6 @@ void ImageArea::print()
         painter.setWindow(mImage->rect()); // 设置绘图窗口
         painter.drawImage(0, 0, *mImage);  // 绘制图像
     }
-
-    // 注意：实际项目中应删除printer和printDialog防止内存泄漏
 }
 
 // 调用图像大小

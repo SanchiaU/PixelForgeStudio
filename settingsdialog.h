@@ -1,10 +1,5 @@
-// 防止头文件重复包含
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
-
-
-// 2025/07/24--代码已经审核通过
-
 
 
 #include <QObject>

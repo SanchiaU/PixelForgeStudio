@@ -37,7 +37,7 @@ void ResizeDialog::initializeGui(){
     QLabel *label5 = new QLabel(tr("x Height:"));
     //创建百分比模式单选按钮
     QRadioButton *percentButton = new QRadioButton(tr("Percent"));
-    connect(percentButton,SIGNAL(clicked()),this,SLOT(percentButtonClicked(bool)));
+    connect(percentButton,SIGNAL(clicked(bool)),this,SLOT(percentButtonClicked(bool)));
     mPercentWButton = new QSpinBox();
     mPercentWButton->setRange(1,200);
     mPercentWButton->setValue(100);

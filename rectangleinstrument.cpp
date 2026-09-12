@@ -1,11 +1,5 @@
 #include "rectangleinstrument.h"
 
-
-
-// 2025/08/07--代码已经审核通过
-
-
-
 // 矩形工具构造函数
 RectangleInstrument::RectangleInstrument(QObject *parent) :
     AbstractInstrument(parent)  // 调用基类构造函数
@@ -31,7 +25,6 @@ void RectangleInstrument::mousePressEvent(QMouseEvent *event, ImageArea &imageAr
     }
 }
 
-
 // 鼠标移动事件处理
 void RectangleInstrument::mouseMoveEvent(QMouseEvent *event, ImageArea &imageArea)
 {
@@ -56,19 +49,12 @@ void RectangleInstrument::mouseMoveEvent(QMouseEvent *event, ImageArea &imageAre
         }
     }
 }
-
-
-
 // 鼠标释放事件处理
 void RectangleInstrument::mouseReleaseEvent(QMouseEvent *event, ImageArea &imageArea)
 {
-    // 检查是否处于绘图状态
     if(imageArea.isPaint())
     {
-        // 恢复原始图像（擦除预览矩形）
         imageArea.setImage(mImageCopy);
-
-        // 根据鼠标按键选择绘制模式
         if(event->button() == Qt::LeftButton)
         {
             paint(imageArea, false);
@@ -83,16 +69,11 @@ void RectangleInstrument::mouseReleaseEvent(QMouseEvent *event, ImageArea &image
     }
 }
 
-
-
 // 矩形绘制核心方法
 // 实现原理：设置画笔属性（主色边框）；左键时设置填充画刷（次色填充）；绘制矩形（从起始点到结束点）
 void RectangleInstrument::paint(ImageArea &imageArea, bool isSecondaryColor, bool)
 {
-    // 创建画家对象，操作绘图区域的图像
     QPainter painter(imageArea.getImage());
-
-    // 设置画笔（用于绘制边框）
     painter.setPen(QPen(
         DataSingleton::Instance()->getPrimaryColor(),  // 边框颜色：主色
         DataSingleton::Instance()->getPenSize() * imageArea.getZoomFactor(),  // 边框宽度（考虑缩放因子）
@@ -100,30 +81,15 @@ void RectangleInstrument::paint(ImageArea &imageArea, bool isSecondaryColor, boo
         Qt::RoundCap,    // 圆形端点
         Qt::RoundJoin    // 圆形连接
         ));
-
-    // 如果使用右键（次色填充）
     if(isSecondaryColor)
     {
-        // 设置画刷（用于填充内部）
         painter.setBrush(QBrush(DataSingleton::Instance()->getSecondaryColor()));
     }
-
-    // 当起始点和结束点不同时绘制矩形
     if(mStartPoint != mEndPoint)
     {
-        // 绘制矩形（自动处理起点和终点的相对位置）
         painter.drawRect(QRect(mStartPoint, mEndPoint));
     }
-
-    // 标记图像已被修改
     imageArea.setEdited(true);
-
-
-    // 结束绘制
     painter.end();
-    // 更新整个绘图区域（未使用上面的优化）
     imageArea.update();
 }
-
-
-

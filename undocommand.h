@@ -14,7 +14,7 @@ class ImageArea;
 // 并在撤销/重做时恢复对应状态
 class UndoCommand : public QUndoCommand
 {
-    //  Q_OBJECT        // 千万要记住，要取注释掉此代码，不需要  启用Qt元对象系统（信号槽机制）
+    //  Q_OBJECT  不需要启用Qt元对象系统（信号槽机制）
 public:
     // 构造函数
     UndoCommand(const QImage* img, ImageArea &imgArea, QUndoCommand *parent = 0);

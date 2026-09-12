@@ -1,17 +1,10 @@
 #ifndef IMAGEAREA_H
 #define IMAGEAREA_H
 
-
-
-// 2025/07/31--代码已经审核通过
-
-
-
 #include "easypaintenums.h"         // 自定义枚举类型（工具类型等）
 #include "additionaltools.h"        // 辅助工具类（提供颜色选择器等工具）
 #include "datasingleton.h"    // 单例数据管理器（全局数据共享）
 #include "undocommand.h"            // 自定义撤销命令实现（支持撤销/重做操作）
-
 
 #include <QWidget>             // Qt 窗口部件基类
 #include <QImage>              // Qt 图像处理类
@@ -33,7 +26,6 @@
 #include <QMessageBox>          // 消息提示框
 #include <QClipboard>           // 剪贴板操作
 
-// 声明Qt命名空间中的类（前置声明）
 QT_BEGIN_NAMESPACE
 class QUndoStack;       //Qt的标准撤销/重做栈类
 QT_END_NAMESPACE
@@ -186,10 +178,4 @@ protected:
 };
 
 #endif // IMAGEAREA_H
-
-
-
-
-
-
 

@@ -1,7 +1,6 @@
 #include "abstractselection.h"
-
-
 #include "math.h"
+
 // 构造函数：初始化所有选择状态标志为false;
 AbstractSelection::AbstractSelection(QObject *parent) :
     AbstractInstrument(parent)
@@ -18,18 +17,13 @@ void AbstractSelection::mousePressEvent(QMouseEvent *event, ImageArea &imageArea
     mIsMouseMoved = false;      // 重置鼠标移动标志
     if (mIsSelectionExists)
     {
-        // 恢复原始图像状态
         imageArea.setImage(mImageCopy);
         paint(imageArea);  // 绘制当前选择内容
-
-        // 右键点击：开始调整操作
         if (mButton == Qt::RightButton)
         {
             mIsSelectionAdjusting = true;
-            startAdjusting(imageArea);  // 调用子类调整逻辑
+            startAdjusting(imageArea);
         }
-
-        // 点击在选区内部
         if (event->pos().x() > mTopLeftPoint.x() &&
             event->pos().x() < mBottomRightPoint.x() &&
             event->pos().y() > mTopLeftPoint.y() &&
@@ -96,55 +90,36 @@ void AbstractSelection::mousePressEvent(QMouseEvent *event, ImageArea &imageArea
 // 鼠标移动事件处理
 void AbstractSelection::mouseMoveEvent(QMouseEvent *event, ImageArea &imageArea)
 {
-    mIsMouseMoved = true;  // 标记鼠标已移动
-
-    // 存在选区时的操作
+    mIsMouseMoved = true;
     if (mIsSelectionExists)
     {
-        // 移动选区
         if (mIsSelectionMoving)
         {
-            // 计算新右下角位置
             mBottomRightPoint = event->pos() + mMoveDiffPoint;
-            // 计算新左上角位置（保持选区尺寸不变）
             mTopLeftPoint = event->pos() + mMoveDiffPoint -
                             QPoint(mWidth - 1, mHeight - 1);
 
-            // 恢复原始图像并执行移动操作
             imageArea.setImage(mImageCopy);
             move(imageArea);        // 调用子类移动逻辑
             drawBorder(imageArea);  // 绘制新边框
             mIsPaint = false;       // 结束绘制状态
         }
-        // 调整选区大小
         else if (mIsSelectionResizing)
         {
-            // 更新右下角为当前鼠标位置
             mBottomRightPoint = event->pos();
-            // 计算新高度（绝对值+1防止为0）
             mHeight = fabs(mTopLeftPoint.y() - mBottomRightPoint.y()) + 1;
-            // 计算新宽度
             mWidth = fabs(mTopLeftPoint.x() - mBottomRightPoint.x()) + 1;
-
-            // 恢复原始图像并执行调整操作
             imageArea.setImage(mImageCopy);
             resize(imageArea);      // 调用子类调整大小逻辑
             drawBorder(imageArea);  // 绘制新边框
             mIsPaint = false;       // 结束绘制状态
         }
     }
-
-    // 首次创建选区（绘制中）
     if (mIsPaint)
     {
-        // 更新终点为当前鼠标位置
         mBottomRightPoint = event->pos();
-        // 计算高度
         mHeight = fabs(mTopLeftPoint.y() - mBottomRightPoint.y()) + 1;
-        // 计算宽度
         mWidth = fabs(mTopLeftPoint.x() - mBottomRightPoint.x()) + 1;
-
-        // 恢复原始图像
         imageArea.setImage(mImageCopy);
         drawBorder(imageArea);  // 绘制临时边框
         select(imageArea);       // 调用子类选择逻辑
@@ -276,13 +251,10 @@ void AbstractSelection::clearSelection(ImageArea &imageArea)
         clear();                // 调用子类清除逻辑
     }
 }
+void AbstractSelection::saveImageChanges(ImageArea &){
 
-// 保存图像变更，暂留接口
-void AbstractSelection::saveImageChanges(ImageArea &)
-{
 
 }
-
 // 更新鼠标光标形状
 void AbstractSelection::updateCursor(QMouseEvent *event, ImageArea &imageArea)
 {

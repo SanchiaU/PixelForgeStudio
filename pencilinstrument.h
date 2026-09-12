@@ -2,13 +2,6 @@
 #define PENCILINSTRUMENT_H
 
 
-
-
-// 2025/08/05--代码已经审核通过
-
-
-
-
 #include "abstractinstrument.h"         // 基类：抽象绘图工具
 #include <QtCore/QObject>               // Qt核心对象
 

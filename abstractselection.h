@@ -3,12 +3,10 @@
 
 
 #include <QObject>
-
-// 引入抽象工具基类
+#include <QPainter>
 #include "abstractinstrument.h"
 #include "imagearea.h"          // 图像区域操作类
 #include "undocommand.h"        // 撤销命令支持
-#include <QPainter>
 
 // 声明Qt命名空间中的类（前向声明）
 QT_BEGIN_NAMESPACE

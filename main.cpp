@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
             if(QFile::exists(args.at(i))){
                 filePaths.append(args.at(i));
             }else{
-                //输出文件没有找到的警告
                 qDebug()<<QString("File %1 not found").arg(args.at(i));
             }
         }
@@ -51,9 +50,6 @@ int main(int argc, char *argv[])
         qDebug()<<app.applicationName()<<app.applicationVersion();
         return 0;
     }
-
-    //创建主窗口的实例，传入要打开的文件路径
-
 
     MainWindow window(filePaths);
 

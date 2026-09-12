@@ -1,11 +1,5 @@
 #include "fillinstrument.h"
 
-
-
-// 2025/08/06--代码已经审核通过
-
-
-
 // 填充工具构造函数
 FillInstrument::FillInstrument(QObject *parent) :
     AbstractInstrument(parent)  // 调用基类构造函数
@@ -100,32 +94,20 @@ void FillInstrument::fillRecurs(int x, int y, QRgb switchColor, QRgb oldColor, Q
     // 向左扫描填充
     while(true)
     {
-        // 检查当前像素是否是需要填充的颜色
-        if(tempImage.pixel(temp_x, y) != oldColor)
-            break;
-
-        // 填充当前像素
+        if(tempImage.pixel(temp_x, y) != oldColor)break;
         tempImage.setPixel(temp_x, y, switchColor);
-
-        // 继续向左移动
-        if(temp_x > 0)
-        {
+        if(temp_x > 0){
             --temp_x;
             left_x = temp_x; // 更新左边界
-        }
-        else
+        }else
             break; // 到达左边界
     }
-
     int right_x(0); // 右边界
     temp_x = x + 1; // 从原始位置右侧开始
-
     // 向右扫描填充
-    while(true)
-    {
+    while(true){
         // 检查当前像素
-        if(tempImage.pixel(temp_x, y) != oldColor)
-            break;
+        if(tempImage.pixel(temp_x, y) != oldColor)break;
 
         // 填充当前像素
         tempImage.setPixel(temp_x, y, switchColor);

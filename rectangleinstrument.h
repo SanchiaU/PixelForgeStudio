@@ -2,11 +2,6 @@
 #define RECTANGLEINSTRUMENT_H
 
 
-
-// 2025/08/07--代码已经审核通过
-
-
-
 #include "abstractinstrument.h"  // 包含基础工具类的定义
 #include <QtCore/QObject>       // 包含Qt核心对象模块
 

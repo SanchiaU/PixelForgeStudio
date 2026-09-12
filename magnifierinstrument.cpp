@@ -1,19 +1,12 @@
 #include "magnifierinstrument.h"
 
 
-
-// 2025/08/05--代码已经审核通过
-
-
-
-
 // 构造函数
 MagnifierInstrument::MagnifierInstrument(QObject *parent) :
     AbstractInstrument(parent)  // 调用基类构造函数
 {
 
 }
-
 // 鼠标按下事件处理
 void MagnifierInstrument::mousePressEvent(QMouseEvent *event, ImageArea &imageArea)
 {
@@ -23,13 +16,10 @@ void MagnifierInstrument::mousePressEvent(QMouseEvent *event, ImageArea &imageAr
         imageArea.setIsPaint(true);  // 设置绘图状态标志
     }
 }
-
-// 鼠标移动事件处理，未使用到
 void MagnifierInstrument::mouseMoveEvent(QMouseEvent *, ImageArea &)
 {
 
 }
-
 // 鼠标释放事件处理
 void MagnifierInstrument::mouseReleaseEvent(QMouseEvent *event, ImageArea &imageArea)
 {
@@ -54,14 +44,9 @@ void MagnifierInstrument::mouseReleaseEvent(QMouseEvent *event, ImageArea &image
                 imageArea.setZoomFactor(0.5);  // 更新缩放因子
             }
         }
-
         imageArea.setIsPaint(false);  // 重置绘图状态标志
     }
 }
-
-
 // 绘制函数，未使用到
 void MagnifierInstrument::paint(ImageArea &, bool , bool )
-{
-
-}
+{}
