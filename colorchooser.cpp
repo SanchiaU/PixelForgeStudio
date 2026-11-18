@@ -1,18 +1,9 @@
 #include "colorchooser.h"
 
-/*
-构造函数：初始化颜色选择器
-初始化流程：
-1.设置标签样式
-2.创建当前颜色对象
-3.创建颜色显示位置
-4.绘制初始化颜色块
-5.设置标签显示属性
-*/
+
 ColorChooser::ColorChooser(const int &r, const int &g, const int &b, QWidget *parent) :
     QLabel(parent)  // 调用基类构造函数
 {
-    // 设置边框样式：凸起+盒子效果
     setFrameStyle(QFrame::Raised | QFrame::Box);
     mCurrentColor = new QColor(r, g, b);
     mPixmapColor = new QPixmap(20, 20);

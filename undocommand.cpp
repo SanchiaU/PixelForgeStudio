@@ -15,25 +15,17 @@ UndoCommand::UndoCommand(const QImage *img, ImageArea &imgArea, QUndoCommand *pa
 // 撤销操作：恢复到操作前的图像状态
 void UndoCommand::undo()
 {
-    // 1. 清除可能存在的选区
     mImageArea.clearSelection();
-    // 2. 保存当前状态（用于重做时恢复）
     mCurrImage = *(mImageArea.getImage());
-    // 3. 恢复到命令执行前的状态
     mImageArea.setImage(mPrevImage);
-    // 4. 更新UI显示
     mImageArea.update();
-    // 5. 保存图像变更状态
     mImageArea.saveImageChanges();
 }
 
 // 重做操作：恢复到操作后的图像状态
 void UndoCommand::redo()
 {
-    // 1. 设置图像为命令执行后的状态
     mImageArea.setImage(mCurrImage);
-    // 2. 更新UI显示
     mImageArea.update();
-    // 3. 保存图像变更状态
     mImageArea.saveImageChanges();
 }

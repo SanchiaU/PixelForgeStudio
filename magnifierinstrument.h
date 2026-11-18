@@ -2,11 +2,6 @@
 #define MAGNIFIERINSTRUMENT_H
 
 
-
-// 2025/08/05--代码已经审核通过
-
-
-
 #include <QtCore/QObject>           // 引入Qt核心对象模块，支持信号槽机制
 #include "abstractinstrument.h"
 #include "imagearea.h"              // 包含图像区域类，提供图像操作功能

@@ -91,6 +91,7 @@ private:
 
     // 工具和效果映射
     QMap<InstrumentsEnum, QAction*> mInstrumentsActMap;  // 工具->动作映射
+    QMap<EffectsEnum, QAction*> mEffectsActMap;          // 效果->动作映射
 
     // 文件操作动作
     QAction *mSaveAction;      // 保存动作
@@ -162,6 +163,9 @@ private slots:  // 槽函数（事件处理函数）
     void restorePreviousInstrument();                 // 恢复上一个工具
     void setInstrument(InstrumentsEnum instrument);   // 设置当前工具
 
+    // 图像特效操作
+    void applyGrayEffect();     // 应用灰度特效
+    void applyNegativeEffect(); // 应用负片特效
 signals:  // 信号（事件通知）
     void sendInstrumentChecked(InstrumentsEnum);  // 通知工具选中状态变化
 

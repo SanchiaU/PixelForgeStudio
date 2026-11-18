@@ -20,7 +20,9 @@
 #include "ellipseinstrument.h"
 #include "curvelineinstrument.h"
 #include "textinstrument.h"
-
+#include "abstracteffect.h"
+#include "grayeffect.h"
+#include "negativeeffect.h"
 
 // Qt 相关头文件
 #include <QApplication>         // 应用程序基础功能
@@ -141,13 +143,31 @@ ImageArea::ImageArea(const bool &isOpen, const QString &filePath, QWidget *paren
     mInstrumentsHandlers[CURVELINE] = new CurveLineInstrument(this); // 曲线工具
     mInstrumentsHandlers[TEXT] = new TextInstrument(this);     // 文字工具
 
+    // 初始化特效处理数组
+    mEffectsHandlers.fill(nullptr,static_cast<int>(EFFECTS_COUNT));
+
+    // 实例化各种特效并存入处理器数组
+    mEffectsHandlers[NONE_EFFECT] = nullptr;
+    mEffectsHandlers[GRAY] = new GrayEffect(this);
+    mEffectsHandlers[NEGATIVE]=new NegativeEffect(this);
+
 
 
 }
 
 // 析构函数
 ImageArea::~ImageArea()
-{}
+{
+    // 释放所有特效处理器对象（如果已实现）
+    for (int i = 0; i < mEffectsHandlers.size(); ++i) {
+        if (mEffectsHandlers[i]) {
+            delete mEffectsHandlers[i];
+            mEffectsHandlers[i] = nullptr;
+        }
+    }
+    mEffectsHandlers.clear();
+
+}
 
 
 // 初始化图像对象
@@ -335,6 +355,57 @@ void ImageArea::rotateImage(bool flag)
 
 
 
+// 应用特效实现
+void ImageArea::applyEffect(EffectsEnum effect)
+{
+    // 1. 验证特效编号
+    if (effect < 0 || effect >= EFFECTS_COUNT) {
+        qDebug() << "Invalid effect enum:" << effect;
+        return;
+    }
+
+    // 2. 检查特效处理器是否存在
+    if (effect == NONE_EFFECT || mEffectsHandlers[effect] == nullptr) {
+        qDebug() << "Effect not implemented or is NONE_EFFECT:" << effect;
+        return;
+    }
+
+    // 3. 检查图像是否有效
+    if (!mImage || mImage->isNull()) {
+        qDebug() << "Image is null, cannot apply effect";
+        return;
+    }
+
+    // 4. 创建撤销命令
+    makeUndoCommand();
+
+    // 5. 获取特效处理器
+    mEffectHandler = mEffectsHandlers[effect];
+
+    // 6. 应用特效到图像
+    bool success = mEffectHandler->apply(*mImage);
+
+    if (success) {
+        // 特效应用成功，标记图像已被编辑
+        setEdited(true);
+
+        // 更新显示
+        update();
+
+        qDebug() << "Effect applied successfully:" << mEffectHandler->getName();
+    } else {
+        qDebug() << "Failed to apply effect:" << mEffectHandler->getName();
+    }
+
+}
+
+// 创建撤销命令（用于特效应用）
+void ImageArea::makeUndoCommand()
+{
+    UndoCommand *cmd = new UndoCommand(mImage, *this);
+    pushUndoCommand(cmd);
+}
+
 
 // 缩放图像
 bool ImageArea::zoomImage(qreal factor)
@@ -464,7 +535,11 @@ void ImageArea::mouseReleaseEvent(QMouseEvent *event)
 void ImageArea::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-
+    if (!mImage || mImage->isNull())   // ★ 空图只画个背景色，别去 drawImage
+    {
+        painter.fillRect(rect(), Qt::darkGray);
+        return;
+    }
     // 绘制透明背景（棋盘格图案表示透明）
     painter.setBrush(QBrush(QPixmap(":media/textures/transparent.jpg")));
     painter.drawRect(0, 0,

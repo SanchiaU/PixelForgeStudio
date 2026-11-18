@@ -1,26 +1,20 @@
 #include "sprayinstrument.h"
 
 
-// 喷枪工具构造函数
 SprayInstrument::SprayInstrument(QObject *parent) :
-    AbstractInstrument(parent)  // 调用基类构造函数
+    AbstractInstrument(parent)
 {}
 
 
-// 鼠标按下事件处理
 void SprayInstrument::mousePressEvent(QMouseEvent *event, ImageArea &imageArea)
 {
     if(event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
     {
         mStartPoint = mEndPoint = event->pos();
         imageArea.setIsPaint(true);
-        // 创建撤销命令快照
         makeUndoCommand(imageArea);
     }
 }
-
-
-// 鼠标移动事件处理
 void SprayInstrument::mouseMoveEvent(QMouseEvent *event, ImageArea &imageArea)
 {
     if(imageArea.isPaint())
@@ -37,7 +31,6 @@ void SprayInstrument::mouseMoveEvent(QMouseEvent *event, ImageArea &imageArea)
         mStartPoint = event->pos();
     }
 }
-// 鼠标释放事件处理
 void SprayInstrument::mouseReleaseEvent(QMouseEvent *event, ImageArea &imageArea)
 {
     if(imageArea.isPaint())
@@ -60,8 +53,6 @@ void SprayInstrument::paint(ImageArea &imageArea, bool isSecondaryColor, bool)
     if(isSecondaryColor)
     {
         painter.setPen(QPen(DataSingleton::Instance()->getSecondaryColor(),
-                            // 笔刷大小 = sqrt(基础大小 * 缩放因子)
-                            // 这样缩放时保持视觉效果一致
                             sqrt(DataSingleton::Instance()->getPenSize() * imageArea.getZoomFactor()),
                             Qt::SolidLine,       // 实线
                             Qt::RoundCap,        // 圆形端点

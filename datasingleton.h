@@ -100,15 +100,12 @@ public:
     void writeState();      // 保存（写入）应用程序状态
 
 private:
-    // 私有构造函数（单例模式）
     DataSingleton();
 
-    // 禁用拷贝构造函数
     DataSingleton(DataSingleton const&){}
 
-    static DataSingleton* m_pInstance;      // 单例实例指针
+    static DataSingleton* m_pInstance;
 
-    // 成员变量
     QColor mPrimaryColor,mSecondaryColor;       // 主要颜色（前景色），次要颜色（背景色）
     int mPenSize;                               // 画笔尺寸（像素）
 

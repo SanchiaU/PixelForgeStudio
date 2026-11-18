@@ -1,7 +1,6 @@
 #include "palettebar.h"
 
 
-// 构造函数：创建调色板工具栏，toolbar参数是父工具栏指针
 PaletteBar::PaletteBar(ToolBar *toolbar) :
     QToolBar(tr("Colors"))  // 设置工具栏标题为"Colors"
 {

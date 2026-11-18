@@ -1,9 +1,9 @@
 -mainwindow  --主窗口运行
-easypaintemums  --工具的枚举
-datasingleton  --单例类创建（调用）工具
-resizedialog  --调整画板尺寸
-colorchooser --颜色选择器
-toolbar --定义绘图工具类型(工具栏基类)
+easypaintemums  --工具的枚举 OK
+datasingleton  --单例类创建（调用）工具 OK
+resizedialog  --调整画板尺寸 OK
+colorchooser --颜色选择器 OK
+toolbar --定义绘图工具类型(工具栏基类) OK
 palettebutton --鼠标点击调色板逻辑
 palettebar --创建左下角15种颜色按钮
 shortCutEdit ==快捷键设置修改（1015）
@@ -13,19 +13,19 @@ imagearea ==图像视图和绘制（1017）-------------------------------------
 UndoCommand ==撤销、重做命令（1018）                                                   -
 AbstractInstrument --定义所有绘图工具实现的通用接口和行为                           -
          <------------------------------------------------------------------------------------
-1、AbstractSelection==鼠标移动事件处理
-2、EraserInstrument==橡皮檫
-3、ColorpickerInstrument--颜色拾取
+1、AbstractSelection==鼠标移动事件处理 OK
+2、EraserInstrument==橡皮檫 OK
+3、ColorpickerInstrument--颜色拾取 OK
 4、MagnifierInstrument--放大镜
-5、PencilInstrument--画笔
-6、LineInstrument--划横线
-7、SprayInstrument--喷枪
-8、FillInstrument--填充
-9、RectangleInstrument--矩形
-0、EllipseInstrument--椭圆
-11、CurveLineInstrument--曲线
-12、TextDialog--文本框
-13、TextInstrument文本工具类设置
+5、PencilInstrument--画笔 OK
+6、LineInstrument--划横线 OK
+7、SprayInstrument--喷枪 OK
+8、FillInstrument--填充 OK
+9、RectangleInstrument--矩形 OK
+0、EllipseInstrument--椭圆 OK
+11、CurveLineInstrument--曲线 OK
+12、TextDialog--文本框 OK
+13、TextInstrument文本工具类设置  OK
 SelectionInstrument ==粘贴复制图像
 mainwindow 主窗口
 
@@ -36,3 +36,4 @@ mainwindow 主窗口
 2、独立的功能不知道怎么写接口
 3、写出来存在报错的现象
 单例模式，命令模式，策略模式
+矩形-》讲一下（划线一类的）-》（本质是对于鼠标事件的继承）提一下喷枪（随机算法）->颜色选择（有发射信号）-》（打开图片）文本框

@@ -1,32 +1,20 @@
 #include "pencilinstrument.h"
 
 
-// 铅笔工具构造函数
 PencilInstrument::PencilInstrument(QObject *parent) :
     AbstractInstrument(parent)   // 调用基类构造函数
 {
 
 }
-
-// 鼠标按下事件处理
 void PencilInstrument::mousePressEvent(QMouseEvent *event, ImageArea &imageArea)
 {
-    // 只处理左右键点击
     if(event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
     {
-        // 记录起始点和结束点（初始为同一点）
         mStartPoint = mEndPoint = event->pos();
-
-        // 设置绘图状态标志
         imageArea.setIsPaint(true);
-
-        // 创建撤销命令快照
         makeUndoCommand(imageArea);
     }
 }
-
-
-// 鼠标移动事件处理
 void PencilInstrument::mouseMoveEvent(QMouseEvent *event, ImageArea &imageArea){
     if(imageArea.isPaint()){
         mEndPoint = event->pos();
@@ -41,17 +29,11 @@ void PencilInstrument::mouseMoveEvent(QMouseEvent *event, ImageArea &imageArea){
         mStartPoint = event->pos();
     }
 }
-
-
-// 鼠标释放事件处理
 void PencilInstrument::mouseReleaseEvent(QMouseEvent *event, ImageArea &imageArea)
 {
     if(imageArea.isPaint())
     {
-        // 设置结束点为释放位置
         mEndPoint = event->pos();
-
-        // 根据释放的按键选择颜色
         if(event->button() == Qt::LeftButton)
         {
             paint(imageArea, false);
@@ -60,16 +42,12 @@ void PencilInstrument::mouseReleaseEvent(QMouseEvent *event, ImageArea &imageAre
         {
             paint(imageArea, true);
         }
-
-        // 清除绘图状态标志
         imageArea.setIsPaint(false);
     }
 }
 
 
-// 核心绘制方法：
 // 配置画笔属性（颜色、大小、样式）
-// 绘制直线或点、更新图像区域状态
 void PencilInstrument::paint(ImageArea &imageArea, bool isSecondaryColor, bool)
 {
     QPainter painter(imageArea.getImage());

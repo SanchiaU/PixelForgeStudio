@@ -1,7 +1,6 @@
 #include "settingsdialog.h"
 
 
-// 构造函数：初始化对话框
 SettingsDialog::SettingsDialog(QWidget *parent) :
     QDialog(parent)  // 调用基类构造函数
 {
@@ -11,7 +10,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 }
 SettingsDialog::~SettingsDialog(){}
 
-// 将设置发送到单例对象保存
 void SettingsDialog::sendSettingsToSingleton()
 {
     // 保存基础设置

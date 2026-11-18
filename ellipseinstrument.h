@@ -2,11 +2,6 @@
 #define ELLIPSEINSTRUMENT_H
 
 
-
-// 2025/08/07--代码已经审核通过
-
-
-
 #include "abstractinstrument.h"  // 基类声明，提供绘图工具的基础接口
 #include <QtCore/QObject>       // Qt 核心对象模块，支持信号槽机制
 

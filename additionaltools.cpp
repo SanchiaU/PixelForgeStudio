@@ -1,11 +1,6 @@
 #include "additionaltools.h"
 
 
-
-// 2025/07/28--代码已经审核通过
-
-
-
 #include "imagearea.h"          // 图像显示区域
 #include "resizedialog.h"       // 尺寸调整对话框
 
@@ -16,73 +11,117 @@ AdditionalTools::AdditionalTools(ImageArea *pImageArea, QObject *parent) :
     mZoomedFactor = 1;         // 初始缩放因子设为1（原始大小）
 }
 
-// 调整画布尺寸
-// width 目标宽度 height 目标高度 flag控制是否弹出对话框
+// void AdditionalTools::resizeCanvas(int width, int height, bool flag)
+// {
+//     if(flag)
+//     {
+//         ResizeDialog resizeDialog(QSize(width, height), qobject_cast<QWidget *>(this->parent()));
+//         if(resizeDialog.exec() == QDialog::Accepted)
+//         {
+//             QSize newSize = resizeDialog.getNewSize();
+//             width = newSize.width();
+//             height = newSize.height();
+//         } else {
+//             return;
+//         }
+//     }
+
+//     if(width < 1 || height < 1)
+//         return;
+
+//     QImage *tempImage = new QImage(width, height, QImage::Format_ARGB32_Premultiplied);
+//     QPainter painter(tempImage);
+
+//     painter.setPen(Qt::NoPen);
+//     painter.setBrush(QBrush(Qt::white));
+//     painter.drawRect(QRect(0, 0, width, height));
+
+//     painter.drawImage(0, 0, *mPImageArea->getImage());
+//     painter.end(); // 结束绘制
+
+//     // 更新图像区域
+//     mPImageArea->setImage(*tempImage);
+
+//     // 调整显示区域尺寸（图像尺寸+6像素边框）
+//     mPImageArea->resize(mPImageArea->getImage()->rect().right() + 6,
+//                         mPImageArea->getImage()->rect().bottom() + 6);
+
+//     // 标记图像已被编辑
+//     mPImageArea->setEdited(true);
+//     // 清除可能存在的选区
+//     mPImageArea->clearSelection();
+// }
 void AdditionalTools::resizeCanvas(int width, int height, bool flag)
 {
-    // 如果flag为true，显示尺寸调整对话框
-    if(flag)
+    if (flag)
     {
-        // 创建对话框，传入当前尺寸和父窗口
         ResizeDialog resizeDialog(QSize(width, height), qobject_cast<QWidget *>(this->parent()));
-        // 对话框确认处理
-        if(resizeDialog.exec() == QDialog::Accepted)
+        if (resizeDialog.exec() == QDialog::Accepted)
         {
             QSize newSize = resizeDialog.getNewSize();
-            width = newSize.width();
+            width  = newSize.width();
             height = newSize.height();
-        } else {
-            return; // 用户取消则直接返回
+        }
+        else
+        {
+            return;
         }
     }
 
-    // 尺寸有效性检查
-    if(width < 1 || height < 1)
+    if (width < 1 || height < 1)
         return;
 
-    // 创建新画布（带透明通道的预乘格式）
-    QImage *tempImage = new QImage(width, height, QImage::Format_ARGB32_Premultiplied);
-    QPainter painter(tempImage);
+    QImage *oldImage = mPImageArea->getImage();
+    if (!oldImage || oldImage->isNull())      // ★ 上游已经是空图，别再往下做
+        return;
 
-    // 填充白色背景
-    painter.setPen(Qt::NoPen);
-    painter.setBrush(QBrush(Qt::white));
-    painter.drawRect(QRect(0, 0, width, height));
+    // ★★ 短路①：尺寸没变就直接返回
+    //    拖动时大量 mouseMove 的目标尺寸和上一帧相同/没跨过像素边界
+    if (oldImage->width() == width && oldImage->height() == height)
+        return;
 
-    // 将原图像绘制到新画布左上角
-    painter.drawImage(0, 0, *mPImageArea->getImage());
-    painter.end(); // 结束绘制
+    // ★★ 短路②：上限保护，别让一次拖动把进程撑爆
+    static const int kMaxSide = 8192;         // 8192² × 4B ≈ 256MB，可按需调整
+    width  = qBound(1, width,  kMaxSide);
+    height = qBound(1, height, kMaxSide);
 
-    // 更新图像区域
-    mPImageArea->setImage(*tempImage);
+    // ★★ 修正核心：栈对象，靠 RAII 自动释放，彻底没有 new/delete
+    QImage newImage(width, height, QImage::Format_ARGB32_Premultiplied);
+    if (newImage.isNull())                    // 分配失败：放弃这一帧，不要污染 mImage
+    {
+        qWarning() << "resizeCanvas: QImage 分配失败" << width << height;
+        return;
+    }
 
-    // 调整显示区域尺寸（图像尺寸+6像素边框）
+    {
+        QPainter painter(&newImage);
+        painter.fillRect(newImage.rect(), Qt::white);   // 新区域铺白
+        painter.drawImage(0, 0, *oldImage);             // 左上角对齐，保留原内容
+    }                                                   // ★ painter 析构 = end()
+
+    mPImageArea->setImage(newImage);                    // 只有这一处赋值
+
+    // 保持原来的"图像 + 6px 手柄"语义
     mPImageArea->resize(mPImageArea->getImage()->rect().right() + 6,
                         mPImageArea->getImage()->rect().bottom() + 6);
 
-    // 标记图像已被编辑
     mPImageArea->setEdited(true);
-    // 清除可能存在的选区
     mPImageArea->clearSelection();
 }
+
 
 // 调整图像尺寸（可能保持宽度比或适应画布）
 void AdditionalTools::resizeImage()
 {
-    // 创建对话框并传入当前图像尺寸
     ResizeDialog resizeDialog(mPImageArea->getImage()->size(), qobject_cast<QWidget *>(this->parent()));
 
-    // 对话框确认处理
     if(resizeDialog.exec() == QDialog::Accepted)
     {
-        // 按新尺寸缩放图像
         mPImageArea->setImage(mPImageArea->getImage()->scaled(resizeDialog.getNewSize()));
 
-        // 调整显示区域
         mPImageArea->resize(mPImageArea->getImage()->rect().right() + 6,
                             mPImageArea->getImage()->rect().bottom() + 6);
 
-        // 标记编辑状态并清除选区
         mPImageArea->setEdited(true);
         mPImageArea->clearSelection();
     }
@@ -109,9 +148,7 @@ void AdditionalTools::rotateImage(bool flag)
     mPImageArea->resize(mPImageArea->getImage()->rect().right() + 6,
                         mPImageArea->getImage()->rect().bottom() + 6);
 
-    // 刷新显示
     mPImageArea->update();
-    // 标记编辑状态并清除选区
     mPImageArea->setEdited(true);
     mPImageArea->clearSelection();
 }

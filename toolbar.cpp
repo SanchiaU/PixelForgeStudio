@@ -89,7 +89,6 @@ void ToolBar::initializeItems()
     connect(penSizeSpin, SIGNAL(valueChanged(int)),
             this, SLOT(penValueChanged(int)));
 
-    // 创建颜色和画笔设置布局 ===========================================
     QGridLayout *tLayout = new QGridLayout();
     tLayout->setMargin(3);  // 设置布局边距
     tLayout->addWidget(mPColorChooser, 0, 0);     // 主色选择器
@@ -100,7 +99,6 @@ void ToolBar::initializeItems()
     QWidget *tWidget = new QWidget();
     tWidget->setLayout(tLayout);
 
-    // 将组件添加到工具栏 =================================
     addWidget(bWidget);    // 添加工具按钮区域
     addSeparator();        // 添加分隔线
     addWidget(tWidget);    // 添加颜色和画笔设置区域

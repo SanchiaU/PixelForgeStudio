@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    abstracteffect.cpp \
     abstractinstrument.cpp \
     abstractselection.cpp \
     additionaltools.cpp \
@@ -19,11 +20,13 @@ SOURCES += \
     ellipseinstrument.cpp \
     eraserinstrument.cpp \
     fillinstrument.cpp \
+    grayeffect.cpp \
     imagearea.cpp \
     lineinstrument.cpp \
     magnifierinstrument.cpp \
     main.cpp \
     mainwindow.cpp \
+    negativeeffect.cpp \
     palettebar.cpp \
     palettebutton.cpp \
     pencilinstrument.cpp \
@@ -39,6 +42,7 @@ SOURCES += \
     undocommand.cpp
 
 HEADERS += \
+    abstracteffect.h \
     abstractinstrument.h \
     abstractselection.h \
     additionaltools.h \
@@ -50,10 +54,12 @@ HEADERS += \
     ellipseinstrument.h \
     eraserinstrument.h \
     fillinstrument.h \
+    grayeffect.h \
     imagearea.h \
     lineinstrument.h \
     magnifierinstrument.h \
     mainwindow.h \
+    negativeeffect.h \
     palettebar.h \
     palettebutton.h \
     pencilinstrument.h \

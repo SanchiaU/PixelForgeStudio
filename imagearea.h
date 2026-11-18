@@ -66,7 +66,12 @@ public:
     }
 
     inline QImage* getImage() { return mImage; }  // 获取图像指针（直接像素访问）
-    inline void setImage(const QImage &image) { *mImage = image; }  // 设置新图像
+    inline void setImage(const QImage &image) {
+        if (image.isNull()) {
+            qWarning("ImageArea::setImage: 收到空 QImage，已忽略");
+            return;                       // ★ 空图不许进来
+        }
+        *mImage = image; }  // 设置新图像
 
     // 编辑状态管理
     inline void setEdited(bool flag) { mIsEdited = flag; }  // 设置修改标志（需保存）
@@ -75,6 +80,8 @@ public:
     /// 光标管理 ///
     void restoreCursor();   // 恢复工具对应的光标样式
 
+    /// 特效处理 ///
+    void applyEffect(EffectsEnum effect);  // 应用指定特效
 
     /// 缩放控制 ///
     bool zoomImage(qreal factor); // 缩放图像（factor>1放大，<1缩小）
@@ -147,6 +154,10 @@ private:
     // 工具系统
     QVector<AbstractInstrument*> mInstrumentsHandlers;  // 可用工具集合
     AbstractInstrument *mInstrumentHandler;             // 当前激活工具
+
+    // 特效系统
+    QVector<AbstractEffect*> mEffectsHandlers;  // 可用特效集合
+    AbstractEffect *mEffectHandler;
 
 signals:
     // 颜色信号

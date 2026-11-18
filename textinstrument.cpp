@@ -2,11 +2,6 @@
 
 
 
-// 2025/08/09--代码已经审核通过
-
-
-
-
 // 构造函数
 TextInstrument::TextInstrument(QObject *parent) :
     AbstractSelection(parent)     // 调用基类构造函数
@@ -18,15 +13,15 @@ TextInstrument::TextInstrument(QObject *parent) :
 // 更新文本内容并重绘
 void TextInstrument::updateText(ImageArea *imageArea, QString textString)
 {
-    mText = textString;                      // 存储新文本
-    imageArea->setImage(mImageCopy);         // 恢复原始图像状态
-    if (!mIsEdited)                          // 首次编辑时创建撤销点
+    mText = textString;
+    imageArea->setImage(mImageCopy);
+    if (!mIsEdited)
     {
-        makeUndoCommand(*imageArea);         // 创建撤销命令
-        mIsEdited = true;                    // 标记已编辑
+        makeUndoCommand(*imageArea);
+        mIsEdited = true;
     }
-    paint(*imageArea);                       // 绘制文本
-    drawBorder(*imageArea);                  // 绘制选择边框
+    paint(*imageArea);
+    drawBorder(*imageArea);
 }
 
 // 当前文本工具未使用
@@ -51,13 +46,6 @@ void TextInstrument::move(ImageArea &imageArea)
     paint(imageArea);  // 重绘文本
 }
 
-// 完成选择操作（弹出文本输入框）
-/*
- * 创建文件输入对话框
- * 连接对话框信号与文本更新柄
- * 设置对话框关闭时自动删除
- * 显示对话框
-*/
 void TextInstrument::completeSelection(ImageArea &imageArea)
 {
     // 创建文本对话框（传入当前文本和图像区域）
@@ -78,56 +66,43 @@ void TextInstrument::completeSelection(ImageArea &imageArea)
 }
 
 
-// 清除文本状态
 void TextInstrument::clear()
 {
-    mText = QString();      // 清空文本
-    mIsEdited = false;      // 重置编辑标记
-    emit sendCloseTextDialog(); // 通知关闭文本对话框
+    mText = QString();
+    mIsEdited = false;
+    emit sendCloseTextDialog();
 }
 
-// 取消文本操作
 void TextInstrument::cancel(ImageArea *imageArea)
 {
-    mText = QString();             // 清空文本
-    clearSelection(*imageArea);    // 清除选择区域
+    mText = QString();
+    clearSelection(*imageArea);
 }
 
 
-// 在图像上绘制文本
-/*
- * 检查选择区域有效性
- * 设置画笔颜色和字体
- * 在待定矩形内绘制文本
- * 标记图标已编辑
- * 更新显示
-*/
+
 void TextInstrument::paint(ImageArea &imageArea, bool, bool)
 {
-    // 检查选择区域是否有效（非零大小）
     if(mTopLeftPoint != mBottomRightPoint)
     {
-        QPainter painter(imageArea.getImage());  // 在图像上创建绘图工具
+        QPainter painter(imageArea.getImage());
 
-        // 设置绘图属性
         painter.setPen(QPen(DataSingleton::Instance()->getPrimaryColor())); // 主颜色
         painter.setFont(DataSingleton::Instance()->getTextFont());          // 预设字体
 
-        // 在选定矩形内绘制文本
         painter.drawText(QRect(mTopLeftPoint, mBottomRightPoint), mText);
 
-        painter.end();  // 结束绘制
+        painter.end();
 
-        imageArea.setEdited(true); // 标记图像已被编辑
-        imageArea.update();        // 更新显示
+        imageArea.setEdited(true);
+        imageArea.update();
     }
 }
 
-// 显示右键菜单
 void TextInstrument::showMenu(ImageArea &imageArea)
 {
-    emit sendCloseTextDialog();     // 关闭现有对话框
-    completeSelection(imageArea);   // 弹出新的文本编辑对话框
+    emit sendCloseTextDialog();
+    completeSelection(imageArea);
 }
 
 

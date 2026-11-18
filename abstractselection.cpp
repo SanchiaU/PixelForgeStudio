@@ -10,7 +10,6 @@ AbstractSelection::AbstractSelection(QObject *parent) :
         = mIsSelectionAdjusting = false;
 }
 
-// 鼠标按下事件处理
 void AbstractSelection::mousePressEvent(QMouseEvent *event, ImageArea &imageArea)
 {
     mButton = event->button();  // 记录按下的鼠标按钮
@@ -48,11 +47,9 @@ void AbstractSelection::mousePressEvent(QMouseEvent *event, ImageArea &imageArea
             }
 
             mIsSelectionMoving = true;  // 设置移动标志
-            // 计算移动偏移量（鼠标位置到右下角的差值）
             mMoveDiffPoint = mBottomRightPoint - event->pos();
             return;
         }
-        // 点击在右下角调整手柄区域（6x6像素）
         else if (event->pos().x() >= mBottomRightPoint.x() &&
                  event->pos().x() <= mBottomRightPoint.x() + 6 &&
                  event->pos().y() >= mBottomRightPoint.y() &&
@@ -72,14 +69,11 @@ void AbstractSelection::mousePressEvent(QMouseEvent *event, ImageArea &imageArea
         }
     }
 
-    // 首次创建选区（左键按下）
     if (event->button() == Qt::LeftButton)
     {
-        // 初始化选区起点和终点
         mBottomRightPoint = mTopLeftPoint = event->pos();
         mHeight = mWidth = 0;  // 初始高度宽度为0
 
-        // 保存当前图像状态副本
         mImageCopy = *imageArea.getImage();
 
         startSelection(imageArea);  // 调用子类选择初始化
@@ -87,7 +81,6 @@ void AbstractSelection::mousePressEvent(QMouseEvent *event, ImageArea &imageArea
     }
 }
 
-// 鼠标移动事件处理
 void AbstractSelection::mouseMoveEvent(QMouseEvent *event, ImageArea &imageArea)
 {
     mIsMouseMoved = true;
@@ -125,14 +118,11 @@ void AbstractSelection::mouseMoveEvent(QMouseEvent *event, ImageArea &imageArea)
         select(imageArea);       // 调用子类选择逻辑
     }
 
-    // 更新鼠标光标形状
     updateCursor(event, imageArea);
 }
 
-// 鼠标释放事件处理
 void AbstractSelection::mouseReleaseEvent(QMouseEvent *event, ImageArea &imageArea)
 {
-    // 确保左上角在左上方，右下角在右下方
     int right = mTopLeftPoint.x() > mBottomRightPoint.x() ?
                     mTopLeftPoint.x() : mBottomRightPoint.x();
     int bottom = mTopLeftPoint.y() > mBottomRightPoint.y() ?

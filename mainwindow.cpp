@@ -376,7 +376,22 @@ void MainWindow::initializeMainMenu()
     zoomMenu->addAction(mZoomOutAction);
 
     mToolsMenu->addMenu(zoomMenu);
+    /********** 特效菜单 **********/
+    QMenu *effectsMenu=menuBar()->addMenu(tr("&Effects"));
 
+    // 灰度特效
+    QAction *grayEffectAction = new QAction(tr("Gray"), this);
+    grayEffectAction->setStatusTip(tr("将图像转换为灰度图像"));
+    connect(grayEffectAction, SIGNAL(triggered()), this, SLOT(applyGrayEffect()));
+    effectsMenu->addAction(grayEffectAction);
+    mEffectsActMap.insert(GRAY, grayEffectAction);
+
+    // 负片特效
+    QAction *negativeEffectAction = new QAction(tr("Negative"), this);
+    negativeEffectAction->setStatusTip(tr("反转图像的所有颜色"));
+    connect(negativeEffectAction, SIGNAL(triggered()), this, SLOT(applyNegativeEffect()));
+    effectsMenu->addAction(negativeEffectAction);
+    mEffectsActMap.insert(NEGATIVE, negativeEffectAction);
     /********** 帮助菜单 **********/
     QMenu *aboutMenu = menuBar()->addMenu(tr("&About"));
 
@@ -484,20 +499,17 @@ void MainWindow::activateTab(const int &index)
     }
 
     // ===== 切换撤销/重做系统的活跃栈 =====
-    // 每个图像都有自己的撤销历史，需要切换到对应的栈
     mUndoStackGroup->setActiveStack(getCurrentImageArea()->getUndoStack());
 }
 // 更新状态栏的尺寸显示
 void MainWindow::setNewSizeToSizeLabel(const QSize &size)
 {
-    // 格式化尺寸信息并显示在状态栏的尺寸标签中
     mSizeLabel->setText(QString("%1 x %2").arg(size.width()).arg(size.height()));
 
 }
 // 更新状态栏的光标位置
 void MainWindow::setNewPosToPosLabel(const QPoint &pos)
 {
-    // 格式化坐标信息并显示在状态栏的位置标签中
     mPosLabel->setText(QString("%1,%2").arg(pos.x()).arg(pos.y()));
 
 }
@@ -819,7 +831,6 @@ void MainWindow::setInstrumentChecked(InstrumentsEnum instrument)
 }
 
 
-// 2025/08/26--代码已经审核通过
 // 工具动作触发处理
 void MainWindow::instumentsAct(bool state)
 {
@@ -918,7 +929,23 @@ void MainWindow::helpAct()
 {
     QMessageBox::about(this, tr("About software"),
                        QString("<b>Software</b> %1: %2 <br> %3: "
-                               "<li>LingSheng Education</li>"
-                               ).arg(tr("Version")).arg("2.2.2").arg(tr("Authors")));
+                               "<li>本软件是一个图片绘画（编辑）软件，借鉴于windows11自带的“画图”</li>"
+                               ).arg(tr("版本")).arg("2.2.2").arg(tr("介绍")));
+}
+// 特效操作实现
+// 应用灰度特效
+void MainWindow::applyGrayEffect()
+{
+    if(ImageArea *imageArea=getCurrentImageArea()){
+        imageArea->applyEffect(GRAY);
+    }
 }
 
+// 应用负片特效
+void MainWindow::applyNegativeEffect()
+{
+    if(ImageArea *imageArea=getCurrentImageArea()){
+        imageArea->applyEffect(NEGATIVE);
+    }
+
+}

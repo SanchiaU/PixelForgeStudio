@@ -1,4 +1,3 @@
-// 防止头文件被重复包含
 #ifndef TOOLBAR_H
 #define TOOLBAR_H
 
@@ -16,24 +15,20 @@
 #include <QAction>
 #include <QtCore/QMap>
 
-// 声明前置类（优化编译）
 QT_BEGIN_NAMESPACE
 class QToolButton;     // Qt工具按钮控件
 class ColorChooser;    // 自定义颜色选择器控件
 QT_END_NAMESPACE
 
 
-// 应用程序主工具栏类
-// 包含绘图工具按钮、颜色选择器等交互控件，继承自Qt标准工具栏QToolBar
+
 class ToolBar : public QToolBar
 {
     Q_OBJECT            // 启用Qt元对象系统（信号槽机制）
 public:
     explicit ToolBar(const QMap<InstrumentsEnum, QAction*> &actMap, QWidget *parent = 0);
 private:
-    // 初始化所有工具栏控件
     void initializeItems();
-    // 创建工具按钮,act 关联的QAction（提供图标、文本等信息）
     QToolButton* createToolButton(QAction *act);
     // 工具按钮成员（按功能命名）
     QToolButton *mCursorButton;     // 光标选择工具

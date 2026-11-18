@@ -28,7 +28,6 @@ class ResizeDialog : public QDialog
 {
     Q_OBJECT
 public:
-    //构造函数
     explicit ResizeDialog(const QSize &size,QWidget *parent);
     //获取用户设置的新尺寸 QSize新尺寸对象（宽、度值）
     inline QSize getNewSize(){return QSize(mWidth,mHeight);}

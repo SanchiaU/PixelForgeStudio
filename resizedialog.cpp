@@ -24,12 +24,12 @@ void ResizeDialog::initializeGui(){
     connect(pixelButton,SIGNAL(clicked(bool)),this,SLOT(pixelsButtonClicked(bool)));
 
     mPixelWButton = new QSpinBox();
-    mPixelWButton->setRange(1,9999); //设置有效范围（1-9999
-    mPixelWButton->setValue(mWidth); //初始化原宽度
+    mPixelWButton->setRange(1,2000);
+    mPixelWButton->setValue(mWidth);
     connect(mPixelWButton,SIGNAL(valueChanged(int)),this,SLOT(pixelsWValueChanged(int)));
     mPixelHButton = new QSpinBox();
-    mPixelHButton->setRange(1,9999); //设置有效范围（1-9999
-    mPixelHButton->setValue(mHeight); //初始化原高度
+    mPixelHButton->setRange(1,2000);
+    mPixelHButton->setValue(mHeight);
     connect(mPixelHButton,SIGNAL(valueChanged(int)),this,SLOT(pixelsHValueChanged(int)));
 
     //像素模式标签

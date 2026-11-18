@@ -1,7 +1,6 @@
 #include "datasingleton.h"
 
 DataSingleton* DataSingleton::m_pInstance = 0;//初始化单例静态指针
-//私有构造函数（单例模式）
 //初始化所有成员变量并读取配置
 DataSingleton::DataSingleton() {
     mPrimaryColor = Qt::black;
